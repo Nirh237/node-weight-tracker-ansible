@@ -1,0 +1,63 @@
+---
+- hosts: app
+  become: yes
+  vars_files:
+    - vars/staging_default.yml
+  tasks:
+
+  - name: "Update and upgrade apt package"
+    apt:
+      upgrade: yes
+      update_cache: yes
+
+
+  - name: "install zip"
+    apt:
+      name: zip
+      state: latest
+
+
+  - name: "install unzip"
+    apt:
+      name: unzip
+      state: latest
+
+
+  - name: "install nodejs"
+    apt:
+      name: nodejs
+      state: latest
+
+
+  - name: "update nodejs version"
+    shell: curl -sL https://deb.nodesource.com/setup_15.x | sudo -E bash -
+
+  - name: "installing dependencies and running the app"
+    shell: >
+      sh 'sudo npm install'
+      sh 'sudo npm run initdb'
+      sh 'sudo npm install pm2 -g'                                 // install pm2
+      sh 'pm2 start -f src/index.js'
+      sh 'pm2 save'
+  # TODO: update PGHOST and HOST_URL with variables, after ensuring hardcode works
+  - name: "create .env file"
+    copy:
+      dest: ".env"    
+      content: |
+        # Host configuration
+        PORT=8080
+        HOST=0.0.0.0
+        NODE_ENV=development
+        HOST_URL=Http://40.74.50.192:8080
+        COOKIE_ENCRYPT_PWD=superAwesomePasswordStringThatIsAtLeast32CharactersLong!
+        
+        # Okta configuration
+        OKTA_ORG_URL=https://dev-72046139.okta.com
+        OKTA_CLIENT_ID="{{ clientid }}"
+        OKTA_CLIENT_SECRET="{{ client_secret }}"
+        # Postgres configuration
+        PGHOST=10.0.1.4
+        PGUSERNAME=postgres
+        PGDATABASE=postgres
+        PGPASSWORD=password
+        PGPORT=5432
