@@ -32,7 +32,7 @@ pipeline {
            // Running the application 
             steps {
                  echo 'Deploying to stating....'
-                sh 'ansible-playbook --ask-become-pass ~//workspace//CI-CD//home//nirh237//workspace//CI-CD//ansible//Playbook_staging.yml'
+                sh 'ansible-playbook --ask-become-pass ~//workspace//CD//home//nirh237//workspace//CI//ansible//Playbook_staging.yml'
                 
                 /*
                 sh 'curl -sL https://deb.nodesource.com/setup_15.x | sudo -E bash -'
