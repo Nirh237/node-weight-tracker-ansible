@@ -2,11 +2,18 @@ pipeline {
     agent {label "slave-cd"}
 
     stages {
+
+
+         stage('clean_ws') {
+            steps {
+                cleanWs()
+            }
+        }
             
         stage('Download_Artifacts') {
             steps {
                     echo 'Downloading Artifacts..'
-                    sh 'wget http://10.0.0.7:8080/job/CI/lastSuccessfulBuild/artifact/my_archive.zip'
+                    sh 'wget http://10.0.0.4:8080/job/CI-CD/lastSuccessfulBuild/artifact/my_archive.zip'
                     echo 'Unzip artifacts'
                     // TODO: how to unzip" tar
                     sh 'unzip -o my_archive.zip'
@@ -24,8 +31,10 @@ pipeline {
         stage('Deploy') {
            // Running the application 
             steps {
-                echo 'Deploying....'
+                 echo 'Deploying to stating....'
+                sh 'ansible-playbook --ask-become-pass ~//workspace//CI-CD//home//nirh237//workspace//CI-CD//ansible//Playbook_staging.yml'
                 
+                /*
                 sh 'curl -sL https://deb.nodesource.com/setup_15.x | sudo -E bash -'
                 sh 'sudo apt-get install -y nodejs'
                 sh 'sudo apt-get install -y build-essential'
@@ -39,7 +48,7 @@ pipeline {
                 //sh 'npm run dev'
                 
                 echo 'Finished building process'
-                
+                */
             }
         }
         stage('Test') {
