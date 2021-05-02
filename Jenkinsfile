@@ -6,7 +6,7 @@ pipeline {
         stage('Build') {
             // Creating env file 
             steps {
-                    echo 'Building..'
+                    echo 'Building...'
                    
             }
         }
