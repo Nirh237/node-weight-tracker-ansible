@@ -11,11 +11,5 @@
 10.0.0.5
 
 
-[app:vars]
-ansible_connection=ssh
-ansible_user=nirh237    
-ansible_password=Azure888801!
-ansible_python_interpreter=/usr/bin/python3
-
 [db]
 10.0.1.4
