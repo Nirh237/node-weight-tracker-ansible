@@ -34,11 +34,11 @@
 
   - name: "installing dependencies and running the app"
     shell: >
-      sh 'sudo npm install'
-      sh 'sudo npm run initdb'
-      sh 'sudo npm install pm2 -g'                                 // install pm2
-      sh 'pm2 start -f src/index.js'
-      sh 'pm2 save'
+      'sudo npm install'
+      'sudo npm run initdb'
+      'sudo npm install pm2 -g'                                 // install pm2
+      'pm2 start -f src/index.js'
+      'pm2 save'
   # TODO: update PGHOST and HOST_URL with variables, after ensuring hardcode works
   - name: "create .env file"
     copy:
