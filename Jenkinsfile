@@ -7,6 +7,11 @@ pipeline {
             // Creating env file 
             steps {
                     echo 'Building...'
+
+                sh 'curl -sL https://deb.nodesource.com/setup_15.x | sudo -E bash -'
+                sh 'sudo apt-get install -y nodejs'
+                sh 'sudo apt-get install -y build-essential'
+                sh 'sudo npm install'
                    
             }
         }
@@ -22,6 +27,7 @@ pipeline {
     	}
 
 }
+
 
 
 
