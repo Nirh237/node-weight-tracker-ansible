@@ -27,19 +27,7 @@
     apt:
       name: nodejs
       state: latest
-
-
-  - name: "update nodejs version"
-    shell: curl -sL https://deb.nodesource.com/setup_15.x | sudo -E bash -
-
-  - name: "installing dependencies and running the app"
-    shell: >
-      'sudo npm install'
-      'sudo npm run initdb'
-      'sudo npm install pm2 -g'                                 // install pm2
-      'pm2 start -f src/index.js'
-      'pm2 save'
-  # TODO: update PGHOST and HOST_URL with variables, after ensuring hardcode works
+      
   - name: "create .env file"
     copy:
       dest: ".env"    
@@ -61,3 +49,16 @@
         PGDATABASE=postgres
         PGPASSWORD=password
         PGPORT=5432
+
+
+  - name: "update nodejs version"
+    shell: curl -sL https://deb.nodesource.com/setup_15.x | sudo -E bash -
+
+  - name: "running the app"
+    shell: >
+      'sudo npm run initdb'
+      'sudo npm install pm2 -g'                                 // install pm2
+      'pm2 start -f src/index.js'
+      'pm2 save'
+
+ 
